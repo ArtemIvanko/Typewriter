@@ -15,13 +15,11 @@ module.exports = {
   ],
   rules: {
     "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-var-requires": 0,
   },
   overrides: [
     {
       files: ["config/*.js"],
-      rules: {
-        "@typescript-eslint/no-var-requires": 0,
-      },
     },
   ],
 };

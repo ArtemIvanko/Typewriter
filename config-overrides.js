@@ -1,4 +1,4 @@
-const react = require("react-app-rewire-alias");
+let react = require("react-app-rewire-alias");
 const { alias } = react;
 
 module.exports = function override(config) {

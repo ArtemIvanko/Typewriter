@@ -6,6 +6,7 @@ export const Router = () => (
     <Routes>
       <Route path="/" element={<Navigation />}>
         Hello
+        <Route path="*" element={<div>Not Found</div>} />
       </Route>
     </Routes>
   </HashRouter>

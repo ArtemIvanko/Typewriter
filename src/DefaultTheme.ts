@@ -79,7 +79,8 @@ let defaultTheme = createTheme({
       fontWeight: 600,
     },
     subtitle2: {
-      fontWeight: 600,
+      fontWeight: 100,
+      fontSize: "1rem",
     },
     button: {
       fontFamily: FontFamily.Secondary,

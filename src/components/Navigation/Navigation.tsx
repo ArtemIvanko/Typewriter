@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import JSLogo from "@assets/images/js-logo.webp";
 import styled from "@/DefaultTheme";
 
@@ -14,9 +14,8 @@ export const Navigation = () => (
       </LogoImageContainer>
     </LogoContainer>
     <ControlPanel>
-      <Typography variant="button">Home</Typography>
-      <Typography variant="button">About</Typography>
-      <Typography variant="button">Contact</Typography>
+      <Button variant="contained">Words</Button>
+      <Button variant="contained">Quotes</Button>
     </ControlPanel>
   </NavigationContainer>
 );

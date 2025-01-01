@@ -7,7 +7,12 @@ export default src;
 
 declare module "*.png" {
   const pngSrc: string;
-export default pngSrc;
+  export default pngSrc;
+}
+
+declare module "*.webp" {
+  const webpSrc: string;
+  export default webpSrc;
 }
 
 declare module "*.jpg" {

@@ -70,7 +70,7 @@ let defaultTheme = createTheme({
   typography: {
     fontFamily: FontFamily.Primary,
     h1: basicHeadingStyles,
-    h2: basicHeadingStyles,
+    h2: { fontWeight: 600 },
     h3: basicHeadingStyles,
     h4: basicHeadingStyles,
     h5: basicHeadingStyles,
@@ -92,8 +92,10 @@ let defaultTheme = createTheme({
     caption: {
       fontFamily: FontFamily.Secondary,
       textTransform: "uppercase",
-      fontSize: "1.5rem",
-      fontWeight: 400,
+      fontSize: "0.5rem",
+      fontWeight: 200,
+      letterSpacing: "0.5rem",
+      textAlign: "center",
     },
   },
   components: {

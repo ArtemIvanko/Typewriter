@@ -1,9 +1,9 @@
 import styled from "@/DefaultTheme";
-import { Outlet } from "react-router-dom";
+import { Outlet as RootOutlet } from "react-router-dom";
 import { Typography } from "@mui/material";
 import JSLogo from "src/assets/images/js-logo.webp";
 
-export const Navigation = () => (
+export const Outlet = () => (
   <Root>
     <NavigationContainer>
       <LogoContainer>
@@ -22,7 +22,7 @@ export const Navigation = () => (
       </ControlPanel>
     </NavigationContainer>
     <Content>
-      <Outlet />
+      <RootOutlet />
     </Content>
     <div>Footer</div>
   </Root>

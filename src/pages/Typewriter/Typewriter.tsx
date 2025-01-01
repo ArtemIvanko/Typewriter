@@ -1,4 +1,4 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect, ChangeEvent, useCallback } from "react";
 import { getQuotes } from "@/Api/getQuotes";
 import { TextField } from "@mui/material";
 import styled from "@/DefaultTheme";
@@ -19,6 +19,15 @@ export const Typewriter = () => {
     
     fetchQuote();
   }, []);
+  
+  const handleInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    setUserInput(event.target.value);
+    
+    if (event.target.value.length === quote?.length) {
+      console.log("Quote completed");
+    }
+  }, [quote]);
+  
   
   if (!quote) {
     return <p>Loading...</p>;
@@ -41,7 +50,7 @@ export const Typewriter = () => {
     <div>
       Typewriter
       <p>{renderQuote()}</p>
-      <TextField label="Type here" multiline fullWidth maxRows={8} variant="filled" />
+      <TextField label="Type here" multiline fullWidth maxRows={8} variant="filled" onChange={handleInputChange} />
     </div>
   );
 };

@@ -17,9 +17,10 @@ const Root = styled("div")({
   justifyContent: "space-between",
   flexDirection: "column",
   height: "100vh",
-})
+});
 
-const Content = styled("div")({
+const Content = styled("div")(({ theme }) => ({
   padding: "1rem 2rem",
   height: "100%",
-})
+  background: theme.palette.info.main,
+}));

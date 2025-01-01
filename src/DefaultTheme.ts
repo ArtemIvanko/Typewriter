@@ -51,7 +51,7 @@ let defaultTheme = createTheme({
       main: "#B51010",
     },
     info: {
-      main: "#7F8B8E",
+      main: "rgba(0,0,0,0.1)",
     },
     success: {
       main: "#148314",

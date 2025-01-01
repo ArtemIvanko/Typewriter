@@ -45,7 +45,7 @@ let defaultTheme = createTheme({
       main: "#FAFAFA",
       light: "#A9F1E3",
       dark: "#8BC6BB",
-      bg: "#666666",
+      bg: "#999999",
     },
     error: {
       main: "#B51010",
@@ -57,7 +57,7 @@ let defaultTheme = createTheme({
       main: "#148314",
     },
     warning: {
-      main: "#DD8C15",
+      main: "#FFD700",
     },
     text: {
       primary: "rgba(0,0,0,0.87)",
@@ -81,6 +81,7 @@ let defaultTheme = createTheme({
     subtitle2: {
       fontWeight: 100,
       fontSize: "1rem",
+      fontFamily: FontFamily.Secondary,
     },
     button: {
       fontFamily: FontFamily.Secondary,

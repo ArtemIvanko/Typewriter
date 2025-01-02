@@ -11,6 +11,15 @@ export const useHandleQuoteRender = () => {
     incorrect: number;
   } | null>(null);
 
+  const shuffleWords = useCallback((text: string) => {
+    const words = text.split(" ");
+    for (let i = words.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [words[i], words[j]] = [words[j], words[i]];
+    }
+    return words.join(" ");
+  }, []);
+
   const handleInputChange = useCallback(
     (value: string) => {
       setUserInput(value);
@@ -66,7 +75,7 @@ export const useHandleQuoteRender = () => {
         count = 5;
       }
 
-      fetchQuotes({ count, setQuote });
+      fetchQuotes({ count, setQuote, shuffleWords });
     },
     [],
   );

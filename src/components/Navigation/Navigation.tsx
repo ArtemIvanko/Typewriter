@@ -1,22 +1,12 @@
 import { Typography } from "@mui/material";
 import JSLogo from "@assets/images/js-logo.webp";
-import { useCallback, useState } from "react";
 import styled from "@/DefaultTheme";
 import { ControlPanel, MenuPanel } from "@utils/Panels";
+import { useHandleMenuController } from "@shared/hooks/handlers";
 
 export const Navigation = () => {
-  const [isWordsOpen, setIsWordsOpen] = useState(false);
-  const [isQuotesOpen, setIsQuotesOpen] = useState(false);
-
-  const handleWordsClick = useCallback(() => {
-    setIsWordsOpen(!isWordsOpen);
-    setIsQuotesOpen(false);
-  }, [isWordsOpen]);
-
-  const handleQuotesClick = useCallback(() => {
-    setIsQuotesOpen(!isQuotesOpen);
-    setIsWordsOpen(false);
-  }, [isQuotesOpen]);
+  const { isQuotesOpen, isWordsOpen, handleWordsClick, handleQuotesClick } =
+    useHandleMenuController();
 
   return (
     <NavigationContainer>

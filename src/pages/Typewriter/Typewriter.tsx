@@ -1,36 +1,42 @@
-import { TextField, Button, Typography } from "@mui/material";
+import { Button, Typography, TextField } from "@mui/material";
 import { useHandleQuoteRender } from "@shared/hooks/handlers";
 import styled from "@/DefaultTheme";
 
 export const Typewriter = () => {
   const {
-    quote,
-    userInput,
+    renderQuote,
     handleInputChange,
     handleRestart,
-    results,
+    userInput,
     isDisabled,
-    renderQuote,
+    results,
+    quote,
+    handleQuoteLengthClick,
   } = useHandleQuoteRender();
-
-  if (!quote) {
-    return <p>Loading...</p>;
-  }
 
   return (
     <div>
+      <ButtonContainer>
+        <Button onClick={() => handleQuoteLengthClick("short")}>Short</Button>
+        <Button onClick={() => handleQuoteLengthClick("moderate")}>
+          Moderate
+        </Button>
+        <Button onClick={() => handleQuoteLengthClick("long")}>Long</Button>
+      </ButtonContainer>
       <div>{renderQuote()}</div>
-      <TextField
-        label="Type here"
-        multiline
-        fullWidth
-        maxRows={8}
-        variant="filled"
-        onChange={handleInputChange}
-        value={userInput}
-        disabled={isDisabled}
-      />
-      {results && (
+      {quote && (
+        <TextField
+          label="Type here"
+          multiline
+          fullWidth
+          maxRows={8}
+          variant="filled"
+          onChange={(e) => handleInputChange(e.target.value)}
+          value={userInput}
+          disabled={isDisabled}
+        />
+      )}
+      {results && quote && (
         <Results>
           <Typography variant="h4">
             Correct: {results.correct} (
@@ -48,6 +54,12 @@ export const Typewriter = () => {
     </div>
   );
 };
+
+const ButtonContainer = styled("div")({
+  display: "flex",
+  gap: "1rem",
+  marginBottom: "1rem",
+});
 
 const Results = styled("div")(({ theme }) => ({
   display: "flex",

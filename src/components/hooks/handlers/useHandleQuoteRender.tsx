@@ -1,6 +1,6 @@
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
-import { getQuotes } from "@/Api/getQuotes";
+import { useCallback, useState } from "react";
 import { Letter } from "@utils/Letter";
+import { fetchQuotes } from "@/Api/fetchQuotes";
 
 export const useHandleQuoteRender = () => {
   const [quote, setQuote] = useState<string | null>(null);
@@ -12,8 +12,7 @@ export const useHandleQuoteRender = () => {
   } | null>(null);
 
   const handleInputChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const value = event.target.value;
+    (value: string) => {
       setUserInput(value);
 
       if (value.length === quote?.length) {
@@ -38,16 +37,6 @@ export const useHandleQuoteRender = () => {
     setIsDisabled(false);
     setResults(null);
     setQuote(null);
-
-    const fetchQuote = async () => {
-      try {
-        const data = await getQuotes();
-        setQuote(data.content);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchQuote();
   }, []);
 
   const renderQuote = useCallback(() => {
@@ -66,27 +55,30 @@ export const useHandleQuoteRender = () => {
     });
   }, [quote, userInput]);
 
-  useEffect(() => {
-    const fetchQuote = async () => {
-      try {
-        const data = await getQuotes();
-        setQuote(data.content);
-      } catch (err) {
-        console.error(err);
+  const handleQuoteLengthClick = useCallback(
+    (length: "short" | "moderate" | "long") => {
+      let count;
+      if (length === "short") {
+        count = 1;
+      } else if (length === "moderate") {
+        count = 3;
+      } else {
+        count = 5;
       }
-    };
 
-    fetchQuote();
-  }, []);
+      fetchQuotes({ count, setQuote });
+    },
+    [],
+  );
 
   return {
     quote,
     userInput,
     isDisabled,
     results,
-    handleInputChange,
     handleRestart,
     renderQuote,
-    setQuote,
+    handleInputChange,
+    handleQuoteLengthClick,
   };
 };

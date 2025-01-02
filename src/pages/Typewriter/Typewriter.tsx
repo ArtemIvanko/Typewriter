@@ -1,18 +1,18 @@
 import { Button, Typography, TextField } from "@mui/material";
-import { useHandleQuoteRender } from "@shared/hooks/handlers";
 import styled from "@/DefaultTheme";
+import { useControls } from "@/ControlsProvider";
 
 export const Typewriter = () => {
   const {
-    renderQuote,
-    handleInputChange,
-    handleRestart,
-    userInput,
-    isDisabled,
-    results,
-    quote,
     handleQuoteLengthClick,
-  } = useHandleQuoteRender();
+    renderQuote,
+    handleRestart,
+    quote,
+    userInput,
+    handleInputChange,
+    results,
+    isDisabled,
+  } = useControls();
 
   return (
     <div>

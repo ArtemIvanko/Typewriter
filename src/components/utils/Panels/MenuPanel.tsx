@@ -3,6 +3,7 @@ import { Button, Typography } from "@mui/material";
 import { Bumper } from "@utils/Bumper";
 import { MenuSubButton } from "@utils/Buttons";
 import { useHandleController } from "@shared/hooks/handlers";
+import { useControls } from "@/ControlsProvider";
 
 interface MenuPanelProps {
   isOpen: boolean;
@@ -20,6 +21,8 @@ export const MenuPanel = ({ isOpen }: MenuPanelProps) => {
     isLengthOpen,
     timeLeft,
   } = useHandleController();
+
+  const { handleQuoteLengthClick } = useControls();
 
   return (
     <StyledMenuPanel>
@@ -47,9 +50,18 @@ export const MenuPanel = ({ isOpen }: MenuPanelProps) => {
       </MenuButton>
       {isLengthOpen && (
         <SubPanel>
-          <MenuSubButton onClick={() => console.log("123")} value="Short" />
-          <MenuSubButton onClick={() => console.log("123")} value="Moderate" />
-          <MenuSubButton onClick={() => console.log("123")} value="Long" />
+          <MenuSubButton
+            onClick={() => handleQuoteLengthClick("short")}
+            value="Short"
+          />
+          <MenuSubButton
+            onClick={() => handleQuoteLengthClick("moderate")}
+            value="Moderate"
+          />
+          <MenuSubButton
+            onClick={() => handleQuoteLengthClick("long")}
+            value="Long"
+          />
         </SubPanel>
       )}
       <Bumper />

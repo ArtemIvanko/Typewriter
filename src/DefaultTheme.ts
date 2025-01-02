@@ -45,19 +45,19 @@ let defaultTheme = createTheme({
       main: "#FAFAFA",
       light: "#A9F1E3",
       dark: "#8BC6BB",
-      bg: "#666666",
+      bg: "#999999",
     },
     error: {
       main: "#B51010",
     },
     info: {
-      main: "#7F8B8E",
+      main: "rgba(0,0,0,0.1)",
     },
     success: {
       main: "#148314",
     },
     warning: {
-      main: "#DD8C15",
+      main: "#FFD700",
     },
     text: {
       primary: "rgba(0,0,0,0.87)",
@@ -70,7 +70,7 @@ let defaultTheme = createTheme({
   typography: {
     fontFamily: FontFamily.Primary,
     h1: basicHeadingStyles,
-    h2: basicHeadingStyles,
+    h2: { fontWeight: 600 },
     h3: basicHeadingStyles,
     h4: basicHeadingStyles,
     h5: basicHeadingStyles,
@@ -79,7 +79,9 @@ let defaultTheme = createTheme({
       fontWeight: 600,
     },
     subtitle2: {
-      fontWeight: 600,
+      fontWeight: 100,
+      fontSize: "1rem",
+      fontFamily: FontFamily.Secondary,
     },
     button: {
       fontFamily: FontFamily.Secondary,
@@ -92,8 +94,10 @@ let defaultTheme = createTheme({
     caption: {
       fontFamily: FontFamily.Secondary,
       textTransform: "uppercase",
-      fontSize: "1.5rem",
-      fontWeight: 400,
+      fontSize: "0.5rem",
+      fontWeight: 200,
+      letterSpacing: "0.5rem",
+      textAlign: "center",
     },
   },
   components: {

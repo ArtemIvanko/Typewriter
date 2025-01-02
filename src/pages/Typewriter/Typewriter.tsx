@@ -1,60 +1,57 @@
-import { useState, useEffect, ChangeEvent, useCallback } from "react";
-import { getQuotes } from "@/Api/getQuotes";
-import { TextField } from "@mui/material";
+import { TextField, Button, Typography } from "@mui/material";
+import { useHandleQuoteRender } from "@shared/hooks/handlers";
 import styled from "@/DefaultTheme";
 
 export const Typewriter = () => {
-  const [quote, setQuote] = useState<string | null>(null);
-  const [userInput, setUserInput] = useState("");
-  
-  useEffect(() => {
-    const fetchQuote = async () => {
-      try {
-        const data = await getQuotes();
-        setQuote(data.content);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    
-    fetchQuote();
-  }, []);
-  
-  const handleInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setUserInput(event.target.value);
-    
-    if (event.target.value.length === quote?.length) {
-      console.log("Quote completed");
-    }
-  }, [quote]);
-  
-  
+  const {
+    quote,
+    userInput,
+    handleInputChange,
+    handleRestart,
+    results,
+    isDisabled,
+    renderQuote,
+  } = useHandleQuoteRender();
+
   if (!quote) {
     return <p>Loading...</p>;
   }
-  
-  const renderQuote = () => {
-    return quote?.split("").map((char: string, index: number) => {
-      const isCorrect = userInput[index] === char;
-      const isTyped = index < userInput.length;
-      
-      return (
-        <Letter key={index} $isCorrect={isCorrect} $isTyped={isTyped}>
-          {char}
-        </Letter>
-      );
-    });
-  };
-  
+
   return (
     <div>
-      Typewriter
-      <p>{renderQuote()}</p>
-      <TextField label="Type here" multiline fullWidth maxRows={8} variant="filled" onChange={handleInputChange} />
+      <div>{renderQuote()}</div>
+      <TextField
+        label="Type here"
+        multiline
+        fullWidth
+        maxRows={8}
+        variant="filled"
+        onChange={handleInputChange}
+        value={userInput}
+        disabled={isDisabled}
+      />
+      {results && (
+        <Results>
+          <Typography variant="h4">
+            Correct: {results.correct} (
+            {((results.correct / quote.length) * 100).toFixed(2)}%)
+          </Typography>
+          <Typography variant="h4">
+            Incorrect: {results.incorrect} (
+            {((results.incorrect / quote.length) * 100).toFixed(2)}%)
+          </Typography>
+          <Button variant="contained" onClick={handleRestart} fullWidth>
+            Restart
+          </Button>
+        </Results>
+      )}
     </div>
   );
 };
 
-const Letter = styled("span")<{ $isCorrect: boolean; $isTyped: boolean }>(({ $isCorrect, $isTyped, theme }) => ({
-  color: !$isTyped ? theme.palette.text.primary : $isCorrect ? theme.palette.success.main : theme.palette.error.main,
-}))
+const Results = styled("div")(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  gap: "1rem",
+  background: theme.palette.secondary.main,
+}));

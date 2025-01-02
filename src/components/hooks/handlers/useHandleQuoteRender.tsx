@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { getQuotes } from "@/Api/getQuotes";
 import { Letter } from "@utils/Letter";
 
@@ -65,6 +65,19 @@ export const useHandleQuoteRender = () => {
       );
     });
   }, [quote, userInput]);
+
+  useEffect(() => {
+    const fetchQuote = async () => {
+      try {
+        const data = await getQuotes();
+        setQuote(data.content);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchQuote();
+  }, []);
 
   return {
     quote,

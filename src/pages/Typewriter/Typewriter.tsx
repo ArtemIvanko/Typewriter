@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-import { getQuotes } from "@/Api/getQuotes";
 import { TextField, Button, Typography } from "@mui/material";
 import { useHandleQuoteRender } from "@shared/hooks/handlers";
 import styled from "@/DefaultTheme";
@@ -13,21 +11,7 @@ export const Typewriter = () => {
     results,
     isDisabled,
     renderQuote,
-    setQuote,
   } = useHandleQuoteRender();
-
-  useEffect(() => {
-    const fetchQuote = async () => {
-      try {
-        const data = await getQuotes();
-        setQuote(data.content);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchQuote();
-  }, []);
 
   if (!quote) {
     return <p>Loading...</p>;

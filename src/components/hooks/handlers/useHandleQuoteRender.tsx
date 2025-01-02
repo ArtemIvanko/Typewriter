@@ -33,7 +33,7 @@ export const useHandleQuoteRender = () => {
     [quote],
   );
 
-  const handleRestart = () => {
+  const handleRestart = useCallback(() => {
     setUserInput("");
     setIsDisabled(false);
     setResults(null);
@@ -48,9 +48,9 @@ export const useHandleQuoteRender = () => {
       }
     };
     fetchQuote();
-  };
+  }, []);
 
-  const renderQuote = () => {
+  const renderQuote = useCallback(() => {
     return quote?.split("").map((char: string, index: number) => {
       const isCorrect = userInput[index] === char;
       const isTyped = index < userInput.length;
@@ -64,7 +64,7 @@ export const useHandleQuoteRender = () => {
         />
       );
     });
-  };
+  }, [quote, userInput]);
 
   return {
     quote,

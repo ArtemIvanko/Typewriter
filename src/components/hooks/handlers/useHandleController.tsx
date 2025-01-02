@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export const useHandleController = () => {
   const [isTimerOpen, setIsTimerOpen] = useState(false);
@@ -24,6 +24,20 @@ export const useHandleController = () => {
     setIsDifficultyOpen(!isDifficultyOpen);
   }, [isDifficultyOpen]);
 
+  useEffect(() => {
+    if (timeLeft === 0) {
+      setTimeLeft(0);
+    }
+
+    if (timeLeft) {
+      const timer = setTimeout(() => {
+        setTimeLeft(timeLeft - 1);
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [timeLeft]);
+
   return {
     isTimerOpen,
     isLengthOpen,
@@ -34,6 +48,5 @@ export const useHandleController = () => {
     handleClick,
     handleLengthClick,
     handleDifficultyClick,
-    setTimeLeft,
   };
 };

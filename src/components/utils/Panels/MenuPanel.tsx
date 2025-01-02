@@ -1,7 +1,6 @@
 import styled from "@/DefaultTheme";
 import { Button, Typography } from "@mui/material";
 import { Bumper } from "@utils/Bumper";
-import { useEffect } from "react";
 import { MenuSubButton } from "@utils/Buttons";
 import { useHandleController } from "@shared/hooks/handlers";
 
@@ -20,22 +19,7 @@ export const MenuPanel = ({ isOpen }: MenuPanelProps) => {
     timerValue,
     isLengthOpen,
     timeLeft,
-    setTimeLeft,
   } = useHandleController();
-
-  useEffect(() => {
-    if (timeLeft === 0) {
-      setTimeLeft(0);
-    }
-
-    if (timeLeft) {
-      const timer = setTimeout(() => {
-        setTimeLeft(timeLeft - 1);
-      }, 1000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [timeLeft]);
 
   return (
     <StyledMenuPanel>

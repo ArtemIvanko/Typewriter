@@ -1,16 +1,20 @@
-import { useState, useEffect, ChangeEvent, useCallback } from "react";
+import { useEffect } from "react";
 import { getQuotes } from "@/Api/getQuotes";
 import { TextField, Button, Typography } from "@mui/material";
+import { useHandleQuoteRender } from "@shared/hooks/handlers";
 import styled from "@/DefaultTheme";
 
 export const Typewriter = () => {
-  const [quote, setQuote] = useState<string | null>(null);
-  const [userInput, setUserInput] = useState("");
-  const [isDisabled, setIsDisabled] = useState(false);
-  const [results, setResults] = useState<{
-    correct: number;
-    incorrect: number;
-  } | null>(null);
+  const {
+    quote,
+    userInput,
+    handleInputChange,
+    handleRestart,
+    results,
+    isDisabled,
+    renderQuote,
+    setQuote,
+  } = useHandleQuoteRender();
 
   useEffect(() => {
     const fetchQuote = async () => {
@@ -25,61 +29,9 @@ export const Typewriter = () => {
     fetchQuote();
   }, []);
 
-  const handleInputChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const value = event.target.value;
-      setUserInput(value);
-
-      if (value.length === quote?.length) {
-        setIsDisabled(true);
-
-        const correctChars = value
-          .split("")
-          .filter((char, index) => char === quote[index]).length;
-        const incorrectChars = value.length - correctChars;
-
-        setResults({
-          correct: correctChars,
-          incorrect: incorrectChars,
-        });
-      }
-    },
-    [quote],
-  );
-
-  const handleRestart = () => {
-    setUserInput("");
-    setIsDisabled(false);
-    setResults(null);
-    setQuote(null);
-
-    const fetchQuote = async () => {
-      try {
-        const data = await getQuotes();
-        setQuote(data.content);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchQuote();
-  };
-
   if (!quote) {
     return <p>Loading...</p>;
   }
-
-  const renderQuote = () => {
-    return quote.split("").map((char: string, index: number) => {
-      const isCorrect = userInput[index] === char;
-      const isTyped = index < userInput.length;
-
-      return (
-        <Letter key={index} $isCorrect={isCorrect} $isTyped={isTyped}>
-          {char}
-        </Letter>
-      );
-    });
-  };
 
   return (
     <div>
@@ -112,17 +64,6 @@ export const Typewriter = () => {
     </div>
   );
 };
-
-const Letter = styled("span")<{ $isCorrect: boolean; $isTyped: boolean }>(
-  ({ $isCorrect, $isTyped, theme }) => ({
-    color: !$isTyped
-      ? theme.palette.text.primary
-      : $isCorrect
-        ? theme.palette.secondary.bg
-        : theme.palette.warning.main,
-    fontSize: "1.5rem",
-  }),
-);
 
 const Results = styled("div")(({ theme }) => ({
   display: "flex",

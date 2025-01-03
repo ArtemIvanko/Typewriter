@@ -2,7 +2,6 @@ import styled from "@/DefaultTheme";
 import { Button, Typography } from "@mui/material";
 import { Bumper } from "@utils/Bumper";
 import { MenuSubButton } from "@utils/Buttons";
-import { useHandleController } from "@shared/hooks/handlers";
 import { useControls } from "@/ControlsProvider";
 
 interface MenuPanelProps {
@@ -11,18 +10,17 @@ interface MenuPanelProps {
 
 export const MenuPanel = ({ isOpen }: MenuPanelProps) => {
   const {
-    isDifficultyOpen,
-    handleDifficultyClick,
-    handleTimerClick,
-    handleLengthClick,
     handleClick,
-    isTimerOpen,
-    timerValue,
-    isLengthOpen,
-    timeLeft,
-  } = useHandleController();
+    timerHandlers,
+    quoteHandlers,
+    difficultyHandlers,
+    lengthHandlers,
+  } = useControls();
 
-  const { handleQuoteLengthClick } = useControls();
+  const { isTimerOpen, timerValue, timeLeft, handleTimerClick } = timerHandlers;
+  const { handleQuoteLengthClick } = quoteHandlers;
+  const { handleDifficultyClick, isDifficultyOpen } = difficultyHandlers;
+  const { handleLengthClick, isLengthOpen } = lengthHandlers;
 
   return (
     <StyledMenuPanel>

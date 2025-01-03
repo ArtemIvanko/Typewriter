@@ -3,26 +3,35 @@ import styled from "@/DefaultTheme";
 import { useControls } from "@/ControlsProvider";
 
 export const Typewriter = () => {
+  const { quoteHandlers, timerHandlers } = useControls();
+
   const {
-    handleQuoteLengthClick,
-    renderQuote,
-    handleRestart,
     quote,
     userInput,
     handleInputChange,
     results,
+    handleRestart,
     isDisabled,
-  } = useControls();
+    renderQuote,
+    setIsDisabled,
+  } = quoteHandlers;
+
+  const { setHasStartedTyping, hasStartedTyping, timeLeft } = timerHandlers;
+
+  const handleTyping = (value: string) => {
+    if (!hasStartedTyping) {
+      setHasStartedTyping(true);
+    }
+
+    if (timeLeft === 0) {
+      setIsDisabled(true);
+    }
+
+    handleInputChange(value);
+  };
 
   return (
     <div>
-      <ButtonContainer>
-        <Button onClick={() => handleQuoteLengthClick("short")}>Short</Button>
-        <Button onClick={() => handleQuoteLengthClick("moderate")}>
-          Moderate
-        </Button>
-        <Button onClick={() => handleQuoteLengthClick("long")}>Long</Button>
-      </ButtonContainer>
       <div>{renderQuote()}</div>
       {quote && (
         <TextField
@@ -31,7 +40,7 @@ export const Typewriter = () => {
           fullWidth
           maxRows={8}
           variant="filled"
-          onChange={(e) => handleInputChange(e.target.value)}
+          onChange={(e) => handleTyping(e.target.value)}
           value={userInput}
           disabled={isDisabled}
         />
@@ -54,12 +63,6 @@ export const Typewriter = () => {
     </div>
   );
 };
-
-const ButtonContainer = styled("div")({
-  display: "flex",
-  gap: "1rem",
-  marginBottom: "1rem",
-});
 
 const Results = styled("div")(({ theme }) => ({
   display: "flex",

@@ -1,56 +1,99 @@
+import { createContext, useContext, ReactNode } from "react";
 import { EmotionJSX } from "@emotion/react/dist/declarations/src/jsx-namespace";
-import { createContext, useContext } from "react";
-import { useHandleQuoteRender } from "@shared/hooks/handlers";
+import {
+  useHandleController,
+  useHandleQuoteRender,
+} from "@shared/hooks/handlers";
 
-interface ControlsContextType {
+interface QuoteHandlers {
   handleQuoteLengthClick: (length: "short" | "moderate" | "long") => void;
   handleInputChange: (value: string) => void;
   handleRestart: () => void;
+  renderQuote: () => EmotionJSX.Element[] | undefined;
   userInput: string;
   isDisabled: boolean;
   results: { correct: number; incorrect: number } | null;
   quote: string | null;
-  renderQuote: () => EmotionJSX.Element[] | undefined;
+  setIsDisabled: (value: boolean) => void;
 }
 
-const ControlsProvider = createContext<ControlsContextType | undefined>(
+interface TimerHandlers {
+  isTimerOpen: boolean;
+  timerValue: number | null;
+  timeLeft: number | null;
+  handleTimerClick: (value: number) => void;
+  setHasStartedTyping: (value: boolean) => void;
+  hasStartedTyping: boolean;
+}
+
+interface DifficultyHandlers {
+  isDifficultyOpen: boolean;
+  handleDifficultyClick: () => void;
+}
+
+interface LengthHandlers {
+  isLengthOpen: boolean;
+  handleLengthClick: () => void;
+}
+
+interface ControlsContextType {
+  quoteHandlers: QuoteHandlers;
+  timerHandlers: TimerHandlers;
+  difficultyHandlers: DifficultyHandlers;
+  lengthHandlers: LengthHandlers;
+  handleClick: () => void;
+}
+
+const ControlsContext = createContext<ControlsContextType | undefined>(
   undefined,
 );
 
-export const ControlsContext = ({ children }: any) => {
+interface ControlsProviderProps {
+  children: ReactNode;
+}
+
+export const ControlsProvider = ({ children }: ControlsProviderProps) => {
+  const quoteHandlers = useHandleQuoteRender();
   const {
-    handleQuoteLengthClick,
-    renderQuote,
-    handleInputChange,
-    handleRestart,
-    userInput,
-    isDisabled,
-    results,
-    quote,
-  } = useHandleQuoteRender();
+    isTimerOpen,
+    timerValue,
+    timeLeft,
+    handleTimerClick,
+    isDifficultyOpen,
+    handleDifficultyClick,
+    isLengthOpen,
+    handleLengthClick,
+    handleClick,
+    hasStartedTyping,
+    setHasStartedTyping,
+  } = useHandleController();
 
   return (
-    <ControlsProvider.Provider
+    <ControlsContext.Provider
       value={{
-        handleQuoteLengthClick,
-        handleInputChange,
-        handleRestart,
-        userInput,
-        isDisabled,
-        results,
-        quote,
-        renderQuote,
+        quoteHandlers,
+        timerHandlers: {
+          isTimerOpen,
+          timerValue,
+          timeLeft,
+          handleTimerClick,
+          hasStartedTyping,
+          setHasStartedTyping,
+        },
+        difficultyHandlers: { isDifficultyOpen, handleDifficultyClick },
+        lengthHandlers: { isLengthOpen, handleLengthClick },
+        handleClick,
       }}
     >
       {children}
-    </ControlsProvider.Provider>
+    </ControlsContext.Provider>
   );
 };
 
-export const useControls = () => {
-  const context = useContext(ControlsProvider);
+export const useControls = (): ControlsContextType => {
+  const context = useContext(ControlsContext);
 
-  if (context === undefined) {
+  if (!context) {
     throw new Error("useControls must be used within a ControlsProvider");
   }
 

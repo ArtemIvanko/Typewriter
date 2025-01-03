@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { Letter } from "@utils/Letter";
 import { fetchQuotes } from "@/Api/fetchQuotes";
+import { useHandleController } from "@shared/hooks/handlers/useHandleController";
 
 export const useHandleQuoteRender = () => {
   const [quote, setQuote] = useState<string | null>(null);
@@ -10,6 +11,8 @@ export const useHandleQuoteRender = () => {
     correct: number;
     incorrect: number;
   } | null>(null);
+
+  const { hasStartedTyping, setHasStartedTyping } = useHandleController();
 
   const shuffleWords = useCallback((text: string) => {
     const words = text.split(" ");
@@ -22,6 +25,10 @@ export const useHandleQuoteRender = () => {
 
   const handleInputChange = useCallback(
     (value: string) => {
+      if (!hasStartedTyping && value.length > 0) {
+        setHasStartedTyping(true);
+      }
+
       setUserInput(value);
 
       if (value.length === quote?.length) {
@@ -89,5 +96,6 @@ export const useHandleQuoteRender = () => {
     renderQuote,
     handleInputChange,
     handleQuoteLengthClick,
+    setIsDisabled,
   };
 };

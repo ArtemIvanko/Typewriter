@@ -3,26 +3,20 @@ import styled from "@/DefaultTheme";
 import { useControls } from "@/ControlsProvider";
 
 export const Typewriter = () => {
+  const { quoteHandlers } = useControls();
+
   const {
-    handleQuoteLengthClick,
-    renderQuote,
-    handleRestart,
     quote,
     userInput,
     handleInputChange,
     results,
+    handleRestart,
     isDisabled,
-  } = useControls();
+    renderQuote,
+  } = quoteHandlers;
 
   return (
     <div>
-      <ButtonContainer>
-        <Button onClick={() => handleQuoteLengthClick("short")}>Short</Button>
-        <Button onClick={() => handleQuoteLengthClick("moderate")}>
-          Moderate
-        </Button>
-        <Button onClick={() => handleQuoteLengthClick("long")}>Long</Button>
-      </ButtonContainer>
       <div>{renderQuote()}</div>
       {quote && (
         <TextField
@@ -54,12 +48,6 @@ export const Typewriter = () => {
     </div>
   );
 };
-
-const ButtonContainer = styled("div")({
-  display: "flex",
-  gap: "1rem",
-  marginBottom: "1rem",
-});
 
 const Results = styled("div")(({ theme }) => ({
   display: "flex",

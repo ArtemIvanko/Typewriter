@@ -6,10 +6,12 @@ export const useHandleController = () => {
   const [isDifficultyOpen, setIsDifficultyOpen] = useState(false);
   const [timerValue, setTimerValue] = useState<number | null>(null);
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
+  const [hasStartedTyping, setHasStartedTyping] = useState(false);
 
   const handleTimerClick = useCallback((value: number) => {
     setTimerValue(value);
     setTimeLeft(value);
+    setHasStartedTyping(false);
   }, []);
 
   const handleClick = useCallback(() => {
@@ -25,18 +27,14 @@ export const useHandleController = () => {
   }, [isDifficultyOpen]);
 
   useEffect(() => {
-    if (timeLeft === 0) {
-      setTimeLeft(0);
-    }
-
-    if (timeLeft) {
+    if (hasStartedTyping && timeLeft !== null && timeLeft > 0) {
       const timer = setTimeout(() => {
-        setTimeLeft(timeLeft - 1);
+        setTimeLeft((prev) => (prev !== null ? prev - 1 : null));
       }, 1000);
 
       return () => clearTimeout(timer);
     }
-  }, [timeLeft]);
+  }, [timeLeft, hasStartedTyping]);
 
   return {
     isTimerOpen,
@@ -48,5 +46,7 @@ export const useHandleController = () => {
     handleClick,
     handleLengthClick,
     handleDifficultyClick,
+    setHasStartedTyping,
+    hasStartedTyping,
   };
 };

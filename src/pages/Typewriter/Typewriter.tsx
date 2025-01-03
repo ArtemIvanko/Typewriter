@@ -13,13 +13,18 @@ export const Typewriter = () => {
     handleRestart,
     isDisabled,
     renderQuote,
+    setIsDisabled,
   } = quoteHandlers;
 
-  const { setHasStartedTyping, hasStartedTyping } = timerHandlers;
+  const { setHasStartedTyping, hasStartedTyping, timeLeft } = timerHandlers;
 
   const handleTyping = (value: string) => {
     if (!hasStartedTyping) {
       setHasStartedTyping(true);
+    }
+
+    if (timeLeft === 0) {
+      setIsDisabled(true);
     }
 
     handleInputChange(value);

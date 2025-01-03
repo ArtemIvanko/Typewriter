@@ -96,5 +96,6 @@ export const useHandleQuoteRender = () => {
     renderQuote,
     handleInputChange,
     handleQuoteLengthClick,
+    setIsDisabled,
   };
 };

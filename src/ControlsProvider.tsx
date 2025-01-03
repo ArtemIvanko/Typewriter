@@ -14,6 +14,7 @@ interface QuoteHandlers {
   isDisabled: boolean;
   results: { correct: number; incorrect: number } | null;
   quote: string | null;
+  setIsDisabled: (value: boolean) => void;
 }
 
 interface TimerHandlers {

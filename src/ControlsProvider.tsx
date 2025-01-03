@@ -21,6 +21,8 @@ interface TimerHandlers {
   timerValue: number | null;
   timeLeft: number | null;
   handleTimerClick: (value: number) => void;
+  setHasStartedTyping: (value: boolean) => void;
+  hasStartedTyping: boolean;
 }
 
 interface DifficultyHandlers {
@@ -61,13 +63,22 @@ export const ControlsProvider = ({ children }: ControlsProviderProps) => {
     isLengthOpen,
     handleLengthClick,
     handleClick,
+    hasStartedTyping,
+    setHasStartedTyping,
   } = useHandleController();
 
   return (
     <ControlsContext.Provider
       value={{
         quoteHandlers,
-        timerHandlers: { isTimerOpen, timerValue, timeLeft, handleTimerClick },
+        timerHandlers: {
+          isTimerOpen,
+          timerValue,
+          timeLeft,
+          handleTimerClick,
+          hasStartedTyping,
+          setHasStartedTyping,
+        },
         difficultyHandlers: { isDifficultyOpen, handleDifficultyClick },
         lengthHandlers: { isLengthOpen, handleLengthClick },
         handleClick,

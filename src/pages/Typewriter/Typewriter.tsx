@@ -3,7 +3,7 @@ import styled from "@/DefaultTheme";
 import { useControls } from "@/ControlsProvider";
 
 export const Typewriter = () => {
-  const { quoteHandlers } = useControls();
+  const { quoteHandlers, timerHandlers } = useControls();
 
   const {
     quote,
@@ -15,6 +15,16 @@ export const Typewriter = () => {
     renderQuote,
   } = quoteHandlers;
 
+  const { setHasStartedTyping, hasStartedTyping } = timerHandlers;
+
+  const handleTyping = (value: string) => {
+    if (!hasStartedTyping) {
+      setHasStartedTyping(true);
+    }
+
+    handleInputChange(value);
+  };
+
   return (
     <div>
       <div>{renderQuote()}</div>
@@ -25,7 +35,7 @@ export const Typewriter = () => {
           fullWidth
           maxRows={8}
           variant="filled"
-          onChange={(e) => handleInputChange(e.target.value)}
+          onChange={(e) => handleTyping(e.target.value)}
           value={userInput}
           disabled={isDisabled}
         />

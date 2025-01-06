@@ -31,7 +31,7 @@ export const Typewriter = () => {
   };
 
   return (
-    <div>
+    <Root>
       <div>{renderQuote()}</div>
       {quote && (
         <TextField
@@ -60,9 +60,20 @@ export const Typewriter = () => {
           </Button>
         </Results>
       )}
-    </div>
+    </Root>
   );
 };
+
+const Root = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  height: "100%",
+  width: "100%",
+  background: "rgba(255, 255, 255, 0.7)",
+  borderRadius: "2rem",
+  padding: "5rem",
+});
 
 const Results = styled("div")(({ theme }) => ({
   display: "flex",

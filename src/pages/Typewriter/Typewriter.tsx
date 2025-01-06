@@ -70,9 +70,11 @@ const Root = styled("div")({
   alignItems: "center",
   height: "100%",
   width: "100%",
-  background: "rgba(255, 255, 255, 0.7)",
   borderRadius: "2rem",
   padding: "5rem",
+  background:
+    "linear-gradient(white, white, transparent), url(https://wallpapercave.com/wp/wp2217907.png)",
+  backgroundSize: "100%",
 });
 
 const Results = styled("div")(({ theme }) => ({

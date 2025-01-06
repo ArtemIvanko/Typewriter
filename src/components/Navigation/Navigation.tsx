@@ -31,11 +31,13 @@ export const Navigation = () => {
   );
 };
 
-const NavigationContainer = styled("div")({
+const NavigationContainer = styled("div")(({ theme }) => ({
   display: "flex",
   width: "100%",
   flexDirection: "column",
-});
+  background: theme.palette.primary.main,
+  color: theme.palette.secondary.main,
+}));
 
 const LogoNameContainer = styled("div")({
   display: "flex",
@@ -46,7 +48,7 @@ const LogoContainer = styled("div")({
   display: "flex",
   alignItems: "center",
   gap: "1rem",
-  padding: "0 1rem",
+  padding: "1rem",
 });
 
 const LogoImageContainer = styled("div")({

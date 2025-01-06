@@ -19,5 +19,5 @@ export const MenuSubButton = ({
 };
 
 const SubButton = styled(Button)(({ theme }) => ({
-  background: theme.palette.warning.main,
+  background: theme.palette.secondary.main,
 }));

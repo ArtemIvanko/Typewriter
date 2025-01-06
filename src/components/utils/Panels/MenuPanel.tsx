@@ -83,13 +83,13 @@ const StyledMenuPanel = styled("div")(({ theme }) => ({
   display: "flex",
   gap: "1rem",
   backgroundColor: theme.palette.text.primary,
-  color: theme.palette.warning.main,
+  color: theme.palette.secondary.main,
   padding: "0.25rem 1rem",
   textTransform: "uppercase",
 }));
 
 const MenuButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.warning.main,
+  color: theme.palette.secondary.main,
 }));
 
 const SubPanel = styled("div")({

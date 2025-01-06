@@ -8,7 +8,6 @@ export const Outlet = () => (
     <Content>
       <RootOutlet />
     </Content>
-    <div>Footer</div>
   </Root>
 );
 
@@ -22,5 +21,5 @@ const Root = styled("div")({
 const Content = styled("div")(({ theme }) => ({
   padding: "1rem 2rem",
   height: "100%",
-  background: theme.palette.info.main,
+  background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
 }));
